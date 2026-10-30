@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: payments-ledger-api
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/ledger}
+    username: ${DB_USER:ledger}
+    password: ${DB_PASSWORD:ledger}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: true
+
+app:
+  # Secreto compartido con el proveedor de pagos para firmar webhooks (HMAC-SHA256)
+  webhook-secret: ${WEBHOOK_SECRET:cambia-este-secreto-de-webhooks}
+  # Secreto para firmar los JWT (HS256). Mínimo 32 caracteres.
+  jwt-secret: ${JWT_SECRET:cambia-este-secreto-jwt-de-al-menos-32-caracteres}
+  # Endpoint /auth/token que emite tokens de prueba. Apágalo fuera de desarrollo.
+  dev-token-enabled: ${DEV_TOKEN_ENABLED:true}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
